@@ -15,7 +15,7 @@ function formatter(req, res, next) {
   });
 }
 
-export default function rest(handler = formatter) {
+export default function rest(handler = formatter, prefix= '' ) {
   return function () {
     const app = this;
 
@@ -28,7 +28,7 @@ export default function rest(handler = formatter) {
 
     // Register the REST provider
     app.providers.push(function (path, service, options) {
-      const uri = path.indexOf('/') === 0 ? path : `/${path}`;
+      const uri = prefix + ( path.indexOf('/') === 0 ? path : `/${path}` );
       const baseRoute = app.route(uri);
       const idRoute = app.route(`${uri}/:__feathersId`);
 
